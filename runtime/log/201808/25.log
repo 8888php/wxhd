@@ -110,3 +110,6 @@
 [ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;port=3306;dbname=fastadmin;charset=utf8
 [ sql ] [ SQL ] SHOW COLUMNS FROM `fa_user` [ RunTime:0.005000s ]
 [ sql ] [ SQL ] SELECT * FROM `fa_user` WHERE  `username` = 'admin' LIMIT 1 [ RunTime:0.002500s ]
+---------------------------------------------------------------
+[ 2018-08-25T18:45:12+08:00 ] 127.0.0.1 POST /admin/index/login?url=%2Fadmin%2Findex%2F
+[ error ] [1045]SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
