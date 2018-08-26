@@ -1,4 +1,0 @@
----------------------------------------------------------------
-[ 2018-06-18T15:50:02+08:00 ] 127.0.0.1 GET /api/common/init?version=as&lng=&lat=
-[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=tpadmin;charset=utf8
-[ error ] [10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tpadmin.fa_area' doesn't exist
