@@ -1,25 +1,62 @@
-<script type="text/javascript" src="__CDN__/assets/qd/jquery-3.3.1.min.js"></script>
-username:<input type="text" id="username" /><br />
-password:<input type="text" id="password" /><br/>
-<span id="error" style="color: red;"></span>
-<input type="button" id="ok" value="ok" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="__CDN__/assets/login/base.css" />
+</head>
+<body>
+<div class="bg_bank">
+    <!--<a class="re_bank" href="###"></a>-->
+    <div class="re_min_infor">
+        <div class="re_logo" class="">
+            <!--<img src="" alt="">-->
+        </div>
+        <div class="bg_color">
+            <div class="re_min">
+                <span class="icon_phone"></span>
+                <input class="input01" id="phone" name="phone" type="text" placeholder="手机" pattern="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$" /><div id="div1"></div>
+            </div>
+            <div class="re_min">
+                <span class="icon_passwarde"></span>
+                <input class="input01"  id="password" name="password" type="password" placeholder="密码" />
+                <span class="the_eyes"></span>
+            </div>
+            <!--<div class="re_min">
+                <span class="icon_vf_code"></span>
+                <input class="input01"  class="login_btn" id="code" name="code" type="text" placeholder="请输入验证码" onkeyup="chkCode(this)"/>
+                <input class="reto_code" id="btn" onclick="settime(this)" value="发送验证码"/>
+            </div>-->
+        </div>
+        <div class="re_regist">
+            <a class="btn_regist" id="login">登录</a>
+        </div>
+        <!--<div class="re_regist02">
+            <a class="" >立即注册</a>
+        </div>-->
+    </div>
+</div>
+
+<script type="text/javascript" src="__CDN__/assets/qd/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="__CDN__/assets/login/index.js" ></script>
 
 <script type="text/javascript">
-    $('#ok').click(function () {
-        var username = $('#username').val();
+    $('#login').click(function () {
+        var phone = $('#phone').val();
         var password = $('#password').val();
         var data = {};
-        data.username = username;
+        data.username = phone;
         data.password = password;
-        if (!username) {
-            $('#username').focus();
+        if (!phone) {
+            $('#phone').focus();
             return;
         }
         if (!password) {
             $('#password').focus();
             return;
         }
-        
+
         $.ajax({
             url : '/wechat/index/login',
             type : 'post',
@@ -34,6 +71,9 @@ password:<input type="text" id="password" /><br/>
                     return;
                 }
             }
-        }); 
+        });
     });
 </script>
+</body>
+</html>
+
