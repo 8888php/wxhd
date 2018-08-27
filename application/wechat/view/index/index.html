@@ -1,0 +1,39 @@
+<script type="text/javascript" src="__CDN__/assets/qd/jquery-3.3.1.min.js"></script>
+username:<input type="text" id="username" /><br />
+password:<input type="text" id="password" /><br/>
+<span id="error" style="color: red;"></span>
+<input type="button" id="ok" value="ok" />
+
+<script type="text/javascript">
+    $('#ok').click(function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var data = {};
+        data.username = username;
+        data.password = password;
+        if (!username) {
+            $('#username').focus();
+            return;
+        }
+        if (!password) {
+            $('#password').focus();
+            return;
+        }
+        
+        $.ajax({
+            url : '/wechat/index/login',
+            type : 'post',
+            data : data,
+            dataType : 'json',
+            success:function(msg){
+                if (msg['code'] == 0) {
+                    window.location.reload();
+                    return;
+                } else {
+                    $('#error').text(msg['msg']);
+                    return;
+                }
+            }
+        }); 
+    });
+</script>
