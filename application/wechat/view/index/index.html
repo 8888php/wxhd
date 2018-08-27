@@ -61,13 +61,14 @@
             url : '/wechat/index/login',
             type : 'post',
             data : data,
+            async:false,
             dataType : 'json',
             success:function(msg){
-                if (msg['code'] == 0) {
+                if (msg.code == 0) {
                     window.location.reload();
                     return;
                 } else {
-                    $('#error').text(msg['msg']);
+                    $('#error').text(msg.msg);
                     return;
                 }
             }

@@ -16,7 +16,6 @@ class Index extends NotLogin
         parent::_initialize();
     }
     private function islogin() {
-//        dump(Wechatuser::getSession(Wechatuser::$sessionName));die;
         //判断是否登录
         if (Wechatuser::isLogin()) {
             $url = $this->request->get('url', 'sign/index');
@@ -62,14 +61,11 @@ class Index extends NotLogin
                 $ret['code'] = 1;
                 $ret['msg'] = '帐号/密码有误';
             }
+            return $ret;
             
-        } else {
-            //error
-            $ret['code'] = 1;
-            $ret['msg'] = '有误';
         }
-        return json_encode($ret);
-       
+        $url = $this->request->get('url', 'index/index');
+        $this->error('', $url, '', 0);
     }
 
 }

@@ -5,10 +5,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <meta name="format-detection" content="telephone=no">
-<title>JS手机端日历签到特效 - 站长素材</title>
+<title>日历签到特效</title>
 <link rel="stylesheet" href="__CDN__/assets/qd/public.css" />
 <link rel="stylesheet" href="__CDN__/assets/qd/signin.css" />
-<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="__CDN__/assets/qd/jquery-3.3.1.min.js"></script>
+
 </head>
 
 <body>
@@ -16,8 +17,8 @@
 	<div class="out-1 flex flex-align-center flex-pack-center" id="signIn">
 		<div class="out-2 flex flex-align-center flex-pack-center">
 			<div class="signBtn">
-				<strong id="sign-txt">签到</strong>
-				<span>连续<em id="sign-count">0</em>天</span>
+				<strong id="sign-txt"><?php if ($today > 0) {echo '已';};?>签到</strong>
+				<span>连续<em id="sign-count"><?php echo $count;?></em>天</span>
 			</div>
 		</div>
 	</div>
@@ -50,6 +51,9 @@
 <script type="text/javascript" src="__CDN__/assets/qd/rili.js"></script>
 <script language="JavaScript">
 	var isSign = false;
+        <?php if ($today > 0){?>
+                isSign = false;
+        <?php }?>
 	var myday = new Array(); //已签到的数组
 //			myday[0] = "1528646400"
 //			myday[1] = "1528387200"
@@ -64,7 +68,7 @@
 			$$("sign-txt").innerHTML = '已签到';
 		},
 		onFinish: function() {
-			$$("sign-count").innerHTML = myday.length //已签到次数
+//			$$("sign-count").innerHTML = myday.length //已签到次数
 			$$("idCalendarYear").innerHTML = this.Year;
 			$$("idCalendarMonth").innerHTML = this.Month; //表头年份
 
@@ -72,17 +76,130 @@
 	});
 	$$("idCalendarPre").onclick = function() {
 		cale.PreMonth();
+                var year = $('#idCalendarYear').text();
+                var month = $('#idCalendarMonth').text();
+                
+                var data = {};
+                data.year = year;
+                data.month = month
+                $.ajax({
+                    url : '/wechat/sign/ajaxsign',
+                    type : 'post',
+                    data : data,
+                    async:false,
+                    dataType : 'json',
+                    success:function(msg){
+                        if (msg.code == -1) {
+                            //重新登录
+                            window.location.reload();
+                            return;
+                        } else if(msg.code == -2) {
+                            alert(msg.msg);
+                            return;
+                        } else if(msg.code == -3) {
+                            alert(msg.msg);
+                            return;
+                        }else if (msg.code == 0) {
+                            js_fuzhi(msg);
+                        } else {
+                            $('#error').text(msg.msg);
+                            return;
+                        }
+                    }
+                });
+
 	}
+        function js_fuzhi(data) {
+            $('#idCalendar span').each(function(i){
+                for(var m in data['data']) {
+                    var y_m_d = data['data'][m]['date'];
+                    var day = y_m_d.split('-');
+                    day = parseInt(day[2]);
+                    if ($(this).text() == day){
+                        $(this).parent().addClass('onToday')
+                    }
+                }
+            });
+        }
 	$$("idCalendarNext").onclick = function() {
 		cale.NextMonth();
+                var year = $('#idCalendarYear').text();
+                var month = $('#idCalendarMonth').text();
+                
+                var data = {};
+                data.year = year;
+                data.month = month
+                $.ajax({
+                    url : '/wechat/sign/ajaxsign',
+                    type : 'post',
+                    data : data,
+                    async:false,
+                    dataType : 'json',
+                    success:function(msg){
+                        if (msg.code == -1) {
+                            //重新登录
+                            window.location.reload();
+                            return;
+                        } else if(msg.code == -2) {
+                            alert(msg.msg);
+                            return;
+                        } else if(msg.code == -3) {
+                            alert(msg.msg);
+                            return;
+                        }else if (msg.code == 0) {
+                            js_fuzhi(msg);
+                        } else {
+                            $('#error').text(msg.msg);
+                            return;
+                        }
+                    }
+                });
 	}
+        //默认进来后，如果本月已经有签到，显示出
+        function php_fuzhi() {
+            $('#idCalendar span').each(function(i){
+                <?php foreach($month_data as $v){
+                $day = (int)explode('-', $v->date)[2];
+                ?>
+                if ($(this).text() == '<?php echo $day;?>'){
+                    $(this).parent().addClass('onToday')
+                }
+                <?php }?>
+            });
+        }
+        php_fuzhi();
 	//添加今天签到
 	$$("signIn").onclick = function() {
 		if(isSign == false) {
 			var res = cale.SignIn();
 			if(res == '1') {
-				$$("sign-txt").innerHTML = '已签到';
-				$$("sign-count").innerHTML = parseInt($$("sign-count").innerHTML) + 1;
+                                var data = {};
+                                $.ajax({
+                                    url : '/wechat/sign/signqd',
+                                    type : 'post',
+                                    data : data,
+                                    async:false,
+                                    dataType : 'json',
+                                    success:function(msg){
+                                        if (msg.code == -1) {
+                                            //重新登录
+                                            window.location.reload();
+                                            return;
+                                        } else if(msg.code == -2) {
+                                            alert(msg.msg);
+                                            return;
+                                        } else if(msg.code == -3) {
+                                            alert(msg.msg);
+                                            return;
+                                        }else if (msg.code == 0) {
+                                            $$("sign-txt").innerHTML = '已签到';
+                                            $$("sign-count").innerHTML = parseInt($$("sign-count").innerHTML) + 1;
+                                        } else {
+                                            $('#error').text(msg.msg);
+                                            return;
+                                        }
+                                    }
+                                });
 				isSign = true;
 			} else if (res == '2'){
 				$$("sign-txt").innerHTML = '已签到';
@@ -94,19 +211,8 @@
 
 	}
 </script>
-<script type="text/javascript">
-    wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: 'wx65d600347c7922fa', // 必填，公众号的唯一标识
-        timestamp: '', // 必填，生成签名的时间戳
-        nonceStr: '', // 必填，生成签名的随机串
-        signature: '',// 必填，签名
-        jsApiList: [] // 必填，需要使用的JS接口列表
-    });
-</script>
 <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
 <p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
-<p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>
 </div>
 </body>
 </html>

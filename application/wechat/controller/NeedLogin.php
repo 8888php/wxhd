@@ -21,8 +21,13 @@ class NeedLogin extends Frontend
     private function islogin() {
         //判断是否登录
         if (!Wechatuser::isLogin()) {
+            if ($this->request->isAjax()) {
+                $ret['code'] = -1;
+                $ret['msg']  = '请登录';
+                return $ret;
+            }
             $url = $this->request->get('url', 'index/index');
-            $this->success('请登录', $url);
+            $this->error('请登录', $url);
         }
     }
     

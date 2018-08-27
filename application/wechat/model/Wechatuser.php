@@ -6,7 +6,7 @@ use think\Session;
 class Wechatuser extends Model
 {
     // 开启自动写入时间戳字段
-    protected $autoWriteTimestamp = 'int';
+    protected $autoWriteTimestamp = 'timestamp';
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
@@ -23,19 +23,31 @@ class Wechatuser extends Model
         return $u_password === $encrypt($password . $salt);
     }
     
-    public static function isLogin() {
-        return self::getSession(self::$sessionName);
+    public static function isLogin($name = null) {
+        if (!$name) {
+            $name = self::$sessionName;
+        }
+        return self::getSession($name);
     }
 
-    public static function setSession($name , $data) {
+    public static function setSession($name = null , $data = null) {
+        if (!$name) {
+            $name = self::$sessionName;
+        }
         Session::set($name, $data);
     }
     
-    public static function dropSession($name){
+    public static function dropSession($name = null){
+        if (!$name) {
+            $name = self::$sessionName;
+        }
         Session::delete($name);
     }
 
-    public static function getSession($name){
+    public static function getSession($name = null){
+        if (!$name) {
+            $name = self::$sessionName;
+        }
         return Session::get($name);
     }
     
@@ -46,11 +58,11 @@ class Wechatuser extends Model
         `username` char(11) NOT NULL COMMENT '用户手机号',
         `password` char(32) NOT NULL COMMENT '用户密码',
         `salt` char(8) DEFAULT 'wxhd' COMMENT 'salt',
-        `createtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-        `updatetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+        `createtime` int NOT NULL DEFAULT NOT,
+        `updatetime` int NOT NULL DEFAULT NOT,
         PRIMARY KEY (`id`)
-      ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='活动用户表'
+      ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='活动用户表'
 
-     
+
      **************************************************************/
 }
