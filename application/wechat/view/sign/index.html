@@ -23,7 +23,7 @@
 		</div>
 	</div>
 </div>
-<div class="tips">今天已签到，获得1个红包</div>
+<div class="tips"><?php if ($today > 0) {echo '今天已签到';}else{echo '今日未签到';};?></div>
 <div class="Calendar">
 	<div id="toyear" class="flex flex-pack-center">
 		<div id="idCalendarPre">&lt;</div>
@@ -194,6 +194,7 @@
                                         }else if (msg.code == 0) {
                                             $$("sign-txt").innerHTML = '已签到';
                                             $$("sign-count").innerHTML = parseInt($$("sign-count").innerHTML) + 1;
+                                            $('.tips').text('今日已签到');
                                         } else {
                                             $('#error').text(msg.msg);
                                             return;

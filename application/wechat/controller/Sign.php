@@ -84,6 +84,7 @@ class Sign extends NeedLogin
 
     public function logout() {
         Wechatuser::dropSession(Wechatuser::$sessionName);
+        \think\Cookie::delete(session_name());
         $url = $this->request->get('url', 'index/index');
         $this->success('退出成功', $url);
     }

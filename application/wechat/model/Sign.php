@@ -57,8 +57,9 @@ class Sign extends Model
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `user_id` int(11) NOT NULL COMMENT '签到用户id',
         `date` date NOT NULL COMMENT '签到时间，如 2018-08-27',
-        `createtime` int NOT NULL DEFAULT NULL,
-        `updatetime` int NOT NULL DEFAULT NULL,
+        `month` char(20) NOT NULL COMMENT '月份如：2017-08',
+        `createtime` int(11) DEFAULT NULL,
+        `updatetime` int(11) DEFAULT NULL,
         PRIMARY KEY (`id`),
         UNIQUE KEY `date` (`date`,`user_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='签到表'
