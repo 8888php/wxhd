@@ -26,8 +26,7 @@ class NeedLogin extends Frontend
                 $ret['msg']  = '请登录';
                 exit(json_encode($ret));
             }
-            $url = $this->request->get('url', 'index/index');
-            $this->error('请登录', $url);
+            $this->redirect('/wechat/index/index');
         }
     }
     

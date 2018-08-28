@@ -18,8 +18,7 @@ class Index extends NotLogin
     private function islogin() {
         //判断是否登录
         if (Wechatuser::isLogin()) {
-            $url = $this->request->get('url', 'sign/index');
-            $this->success('', $url, '', 0);
+            $this->redirect('/wechat/sign/index');
         }
     }
     
@@ -75,8 +74,7 @@ class Index extends NotLogin
             return $ret;
             
         }
-        $url = $this->request->get('url', 'index/index');
-        $this->error('', $url, '', 0);
+        $this->redirect('/wechat/index/index');
     }
     /**
      * 处理登录
@@ -109,8 +107,7 @@ class Index extends NotLogin
             return $ret;
             
         }
-        $url = $this->request->get('url', 'index/index');
-        $this->error('', $url, '', 0);
+        $this->redirect('/wechat/index/index');
     }
 
 }

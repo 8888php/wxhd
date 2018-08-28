@@ -85,8 +85,8 @@ class Sign extends NeedLogin
             }
             return $ret;
         } else {
-            $url = $this->request->get('url', 'sign/index');
-            $this->success('', $url, '', 0);
+            $this->redirect('/wechat/sign/index');
+            
         }
         
     }
