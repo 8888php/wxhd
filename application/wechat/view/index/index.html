@@ -85,7 +85,7 @@
             dataType : 'json',
             success:function(msg){
                 if (msg.code == 0) {
-                    window.location.reload();
+                    window.location.href = '/wechat/sign/index';
                     return;
                 } else {
                     $('#error').text(msg.msg);

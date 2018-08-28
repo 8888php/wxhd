@@ -24,7 +24,7 @@ class NeedLogin extends Frontend
             if ($this->request->isAjax()) {
                 $ret['code'] = -1;
                 $ret['msg']  = '请登录';
-                return $ret;
+                exit(json_encode($ret));
             }
             $url = $this->request->get('url', 'index/index');
             $this->error('请登录', $url);

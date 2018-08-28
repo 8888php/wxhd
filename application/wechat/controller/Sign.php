@@ -2,6 +2,7 @@
 namespace app\wechat\controller;
 
 use app\wechat\model\Wechatuser;
+use think\Config;
 class Sign extends NeedLogin
 {
     protected $noNeedLogin = '*';
@@ -28,6 +29,7 @@ class Sign extends NeedLogin
         $today = date('Y-m-d');
         $today_data = \app\wechat\model\Sign::all(['user_id' => $user_id, 'date' => $today]);
         
+        $this->view->assign('userinfo', $userinfo);
         $this->view->assign('today', count($today_data));
         $this->view->assign('count', $count);
         $this->view->assign('month_data', $month_data);
@@ -57,6 +59,13 @@ class Sign extends NeedLogin
      */
     public function signqd() {
         if ($this->request->isAjax()) {
+            $count = Config::get('qiandaocishu');//每天的总签到次数
+            $today_all = \app\wechat\model\Sign::all(['date', date('Y-m-d', time())]);
+            if (count($today_all) >= $count) {
+                $ret['code'] = -4;
+                $ret['msg']  = '今天签到人数已满';
+                return $ret;
+            }
             //ajax
             $res = \app\wechat\model\Sign::qiandao();
             if (!$res) {

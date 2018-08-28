@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <meta name="format-detection" content="telephone=no">
-<title>日历签到特效</title>
+<title>朝阳区妇女联合会签到</title>
 <link rel="stylesheet" href="__CDN__/assets/qd/public.css" />
 <link rel="stylesheet" href="__CDN__/assets/qd/signin.css" />
 <script type="text/javascript" src="__CDN__/assets/qd/jquery-3.3.1.min.js"></script>
@@ -25,6 +25,7 @@
 </div>
 <div class="tips"><?php if ($today > 0) {echo '今天已签到';}else{echo '今日未签到';};?></div>
 <div class="Calendar">
+    <div class="" style="text-align: center; color: blue;">您的手机号码：<?php echo $userinfo['username'];?></div>
 	<div id="toyear" class="flex flex-pack-center">
 		<div id="idCalendarPre">&lt;</div>
 		<div class="year-month">
@@ -91,7 +92,7 @@
                     success:function(msg){
                         if (msg.code == -1) {
                             //重新登录
-                            window.location.reload();
+                            window.location.href = '/wechat/index/index';
                             return;
                         } else if(msg.code == -2) {
                             alert(msg.msg);
@@ -138,7 +139,7 @@
                     success:function(msg){
                         if (msg.code == -1) {
                             //重新登录
-                            window.location.reload();
+                            window.location.href = '/wechat/index/index';
                             return;
                         } else if(msg.code == -2) {
                             alert(msg.msg);
@@ -183,25 +184,32 @@
                                     success:function(msg){
                                         if (msg.code == -1) {
                                             //重新登录
-                                            window.location.reload();
+                                            window.location.href = '/wechat/index/index';
                                             return;
                                         } else if(msg.code == -2) {
                                             alert(msg.msg);
+                                            isSign = true;
                                             return;
                                         } else if(msg.code == -3) {
+                                            signout()
                                             alert(msg.msg);
                                             return;
-                                        }else if (msg.code == 0) {
+                                        } else if(msg.code == -4) {
+                                            signout()
+                                            alert(msg.msg);
+                                            return;
+                                        } else if (msg.code == 0) {
                                             $$("sign-txt").innerHTML = '已签到';
                                             $$("sign-count").innerHTML = parseInt($$("sign-count").innerHTML) + 1;
                                             $('.tips').text('今日已签到');
+                                            isSign = true;
                                         } else {
                                             $('#error').text(msg.msg);
                                             return;
                                         }
                                     }
                                 });
-				isSign = true;
+				
 			} else if (res == '2'){
 				$$("sign-txt").innerHTML = '已签到';
 				alert('今天已经签到了')
@@ -211,9 +219,23 @@
 		}
 
 	}
+        //取消签到
+        function signout() {
+            var now = new Date();
+            var Year = now.getFullYear();
+            var Month = now.getMonth() + 1;
+            var day = now.getDate();
+            $('.onToday span').each(function(){
+                if ($(this).text() == day) {
+                 
+                    $(this).parent().removeClass();
+                }
+            });
+        }
 </script>
 <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
-<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<p>主办方：朝阳区妇女联合会</p>
+<div>官方二维码：<img width="80" src="__CDN__/assets/qd/chaoyangnvxing.jpeg" /></div>
 </div>
 </body>
 </html>
