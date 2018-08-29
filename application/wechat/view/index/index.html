@@ -98,4 +98,17 @@
 </script>
 </body>
 </html>
+<script type="text/javascript">
+    function is_weixn(){
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i)=="micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+}
+if (!is_weixn()) {
+    $('body').html("<h1 style='text-align:center;'>请在微信中打开</h1>")
+}
+</script>
 
