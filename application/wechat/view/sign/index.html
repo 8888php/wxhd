@@ -233,7 +233,14 @@
             });
         }
 </script>
-<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<div style="text-align: center;">
+    <ul>
+        <?php foreach($paiming5 as $k=>$v){?>
+        <li>第<?php echo $k+1;?>名：<?php echo $userinfo['username'] == $v['username'] ? $v['username'] : substr($v['username'], 0, 3).'*****'.substr($v['username'], 9, 3);?></li>
+        <?php } ?>
+    </ul>
+</div>
+<div style="text-align:center;margin:10px 0; font:normal 14px/24px 'MicroSoft YaHei';">
 <p>主办方：朝阳区妇女联合会</p>
 <div>官方二维码：<img width="80" src="__CDN__/assets/qd/chaoyangnvxing.jpeg" /></div>
 </div>

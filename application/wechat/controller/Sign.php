@@ -3,6 +3,7 @@ namespace app\wechat\controller;
 
 use app\wechat\model\Wechatuser;
 use think\Config;
+use think\Db;
 class Sign extends NeedLogin
 {
     protected $noNeedLogin = '*';
@@ -28,6 +29,12 @@ class Sign extends NeedLogin
         $month_data = \app\wechat\model\Sign::all(['user_id' => $user_id, 'month' => $month]);
         $today = date('Y-m-d');
         $today_data = \app\wechat\model\Sign::all(['user_id' => $user_id, 'date' => $today]);
+        
+        //取出前5名签到者
+        $prefix = Db::connect()->getConfig('prefix');
+        $sql_limit_5 = "select count(user_id) count, username, nickname from {$prefix}sign s left join {$prefix}wechatuser u on u.id=s.user_id group by user_id order by count desc limit 5;";
+        $paiming5 = Db()->query($sql_limit_5);
+        $this->view->assign('paiming5', $paiming5);
         
         $this->view->assign('userinfo', $userinfo);
         $this->view->assign('today', count($today_data));

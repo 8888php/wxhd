@@ -39,7 +39,7 @@ class Wechatuser extends Model
             $name = self::$sessionName;
         }
         if ($lifetime) {
-//            Session::init(array('prefix' => self::$qianzhui, 'expire' => $lifetime));
+            Session::init(array('prefix' => self::$qianzhui, 'expire' => $lifetime));
         }
         Session::set($name, $data, self::$qianzhui);
         if ($lifetime) {
