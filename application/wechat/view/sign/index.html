@@ -236,7 +236,7 @@
 <div style="text-align: center;">
     <ul>
         <?php foreach($paiming5 as $k=>$v){?>
-        <li>第<?php echo $k+1;?>名：<?php echo $userinfo['username'] == $v['username'] ? $v['username'] : substr($v['username'], 0, 3).'*****'.substr($v['username'], 9, 3);?></li>
+        <li style="<?php if ($userinfo['username'] == $v['username']) {echo 'color:blue;';}?>">第<?php echo $k+1;?>名：<?php echo $userinfo['username'] == $v['username'] ? $v['username'] : substr($v['username'], 0, 3).'*****'.substr($v['username'], 8, 3);?></li>
         <?php } ?>
     </ul>
 </div>
