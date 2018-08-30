@@ -21,7 +21,7 @@ class Sign extends NeedLogin
      */
     public function index()
     {
-        $userinfo = Wechatuser::getSession();
+        $userinfo = Wechatuser::cookieGet();
         $user_id  = $userinfo['id'];
         $sigin = \app\wechat\model\Sign::all(['user_id' => $user_id]);
         $count = count($sigin);//签到总次数
@@ -50,7 +50,7 @@ class Sign extends NeedLogin
             
             $time = strtotime($year . '-' . $month);
             $month_new = date('Y-m', $time);
-            $userinfo = Wechatuser::getSession();
+            $userinfo = Wechatuser::cookieGet();
             $user_id  = $userinfo['id'];
             $month_data = \app\wechat\model\Sign::all(['user_id' => $user_id, 'month' => $month_new]);
             return array(
@@ -100,7 +100,6 @@ class Sign extends NeedLogin
 
     public function logout() {
         Wechatuser::dropSession(Wechatuser::$sessionName);
-        \think\Cookie::delete(session_name());
         $url = $this->request->get('url', 'index/index');
         $this->success('退出成功', $url);
     }

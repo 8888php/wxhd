@@ -43,8 +43,8 @@ class Index extends NotLogin
             );
             $userinfo = Wechatuser::getPasswordByUsername($username);
             if ($userinfo) {
-                Wechatuser::setSession(Wechatuser::$sessionName, $userinfo->toArray(), Wechatuser::$sessionLiftTime);
-                //Cookie::set($name);
+                Wechatuser::cookieSet(Wechatuser::$sessionName, serialize($userinfo->toArray()), Wechatuser::$sessionLiftTime);
+//                Wechatuser::setSession(Wechatuser::$sessionName, $userinfo->toArray(), Wechatuser::$sessionLiftTime);
                 $ret['code'] = 0;
                 $ret['msg'] = 'login ok';
 //                $flag = Wechatuser::checkPassword($userinfo['password'], $password, $userinfo['salt']);
@@ -62,7 +62,8 @@ class Index extends NotLogin
                 if ($flag) {
                     $userinfo = Wechatuser::getPasswordByUsername($username);
                     //登录成功 记录Session
-                    Wechatuser::setSession(Wechatuser::$sessionName, $userinfo->toArray(), Wechatuser::$sessionLiftTime);
+                    Wechatuser::cookieSet(Wechatuser::$sessionName, serialize($userinfo->toArray()), Wechatuser::$sessionLiftTime);
+//                    Wechatuser::setSession(Wechatuser::$sessionName, $userinfo->toArray(), Wechatuser::$sessionLiftTime);
                     //Cookie::set($name);
                     $ret['code'] = 0;
                     $ret['msg'] = 'login ok';

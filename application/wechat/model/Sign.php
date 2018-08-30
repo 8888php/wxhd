@@ -15,7 +15,7 @@ class Sign extends Model
     protected $updateTime = 'updatetime';
     
     public static function qiandao () {
-        $userinfo = Wechatuser::getSession();
+        $userinfo = Wechatuser::cookieGet();
         $sign = new Sign();
         $sign->user_id = $userinfo['id'];
         $sign->date = date('Y-m-d', time());
