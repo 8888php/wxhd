@@ -23,7 +23,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 pk: 'id',
                 sortName: 'weigh',
                 search: false,
-                pagination: false,
+                pagination: true,
                 commonSearch: true,
                 columns: [
                     [
@@ -31,7 +31,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'nickname', title: __('昵称')},
                         {field: 'date', title: __('签到日期')},
                         {field: 'month', title: __('签到月份')},
-                        {field: 'updatetime', title: __('记录时间')}
+                        {field: 'updatetime', title: __('记录时间'), formatter: Table.api.formatter.datetime, operate: 'RANGE', addclass: 'datetimerange', sortable: true},
                     ]
                 ]
             };
