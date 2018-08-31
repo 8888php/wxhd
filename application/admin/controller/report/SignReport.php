@@ -24,27 +24,56 @@ class SignReport extends Backend
     {
         parent::_initialize();
         $this->request->filter(['strip_tags']);
-        $this->signList = Db::name('wechatuser')
+        /*$this->signList = Db::name('wechatuser')
             ->alias('a')
             ->join('sign b', 'a.id = b.user_id', 'LEFT')
             ->order('b.updatetime','desc')
             ->paginate(3,false,[
                 'type'     => 'bootstrap',
                 'var_page' => 'page',
-            ]);
+            ]);*/
     }
 
     public function index(){
 
         if ($this->request->isAjax())
         {
-            $search = $this->request->request("search");
+
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+            $total = Db::name('wechatuser')
+                ->alias('a')
+                ->join('sign b', 'a.id = b.user_id', 'LEFT')
+                ->where($where)
+                ->order('b.updatetime','desc')
+                ->count();
+
+            $list = Db::name('wechatuser')
+                ->alias('a')
+                ->join('sign b', 'a.id = b.user_id', 'LEFT')
+                ->where($where)
+                ->order('b.updatetime','desc')
+                ->limit($offset, $limit)
+                ->select();
+            $result = array("total" => $total, "rows" => $list);
+
+            return json($result);
+
+
+            /*$search = $this->request->request("search");
             $type = $this->request->request("type");
 
             //构造父类select列表选项数据
             $list = [];
-
-            foreach ($this->signList as $k => $v)
+            $this->signList = Db::name('wechatuser')
+                ->alias('a')
+                ->join('sign b', 'a.id = b.user_id', 'LEFT')
+                ->order('b.updatetime','desc')->select();
+//                ->paginate(3,false,[
+//                    'type'     => 'bootstrap',
+//                    'var_page' => 'page',
+//                ]);
+            $list = $this->signList;*/
+            /*foreach ($this->signList as $k => $v)
             {
                 if ($search) {
                     if ($v['type'] == $type && stripos($v['name'], $search) !== false || stripos($v['nickname'], $search) !== false)
@@ -64,11 +93,11 @@ class SignReport extends Backend
 
                 }
 
-            }
+            }*/
 
-            $total = count($list);
+            /*$total = count($list);
             $result = array("total" => $total, "rows" => $list);
-            return json($result);
+            return json($result);*/
         }
         return $this->view->fetch();
 
@@ -148,5 +177,10 @@ class SignReport extends Backend
         $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
         return parent::edit($ids);
     }*/
+
+    public function selectpage()
+    {
+        return parent::selectpage();
+    }
 
 }
