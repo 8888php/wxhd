@@ -5,13 +5,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'signreport/index',
+                    index_url: 'report/signreport/index',
                     add_url: '',
                     edit_url: '',
                     del_url: '',
                     multi_url: '',
                     dragsort_url: '',
-                    table: 'sign',
+                    table: 'wechatuser',
                 }
             });
 
@@ -22,8 +22,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 escape: false,
                 pk: 'id',
                 sortName: 'weigh',
+                search: false,
                 pagination: false,
-                commonSearch: false,
+                commonSearch: true,
                 columns: [
                     [
                         {field: 'username', title: __('手机号')},
