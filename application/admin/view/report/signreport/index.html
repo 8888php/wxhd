@@ -1,0 +1,140 @@
+<div class="panel panel-default panel-intro">
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div class="bootstrap-table">
+                        <!--<div class="fixed-table-toolbar">
+
+                            <div class="columns columns-right btn-group pull-right">
+                                <div class="export btn-group">
+                                    <button class="btn btn-default dropdown-toggle" aria-label="export type" title="导出数据" data-toggle="dropdown" type="button"><i class="glyphicon glyphicon-export icon-share"></i><span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="menuitem" data-type="csv"><a href="javascript:void(0)">CSV</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="pull-right search">
+                                <input class="form-control" type="text" placeholder="搜索"/>
+                            </div>
+                        </div>-->
+                        <div class="fixed-table-container" style="padding-bottom: 0px;">
+                            <div class="fixed-table-header" style="display: none;">
+                                <table>
+                                </table>
+                            </div>
+                            <div class="fixed-table-body">
+                                <div class="fixed-table-loading" style="top: 42px; display: none;">
+                                    正在努力地加载数据中，请稍候……
+                                </div>
+                                <table id="table" class="table table-striped table-bordered table-hover" data-operate-edit="1" data-operate-del="1" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center; vertical-align: middle; " data-field="username">
+                                            <div class="th-inner ">
+                                                手机号
+                                            </div>
+                                            <div class="fht-cell">
+                                            </div>
+                                        </th>
+                                        <th style="text-align: center; vertical-align: middle; " data-field="nickname">
+                                            <div class="th-inner ">
+                                                昵称
+                                            </div>
+                                            <div class="fht-cell">
+                                            </div>
+                                        </th>
+                                        <th style="text-align: center; vertical-align: middle; " data-field="date">
+                                            <div class="th-inner ">
+                                                签到日期
+                                            </div>
+                                            <div class="fht-cell">
+                                            </div>
+                                        </th>
+                                        <th style="text-align: center; vertical-align: middle; " data-field="month">
+                                            <div class="th-inner ">
+                                                签到月份
+                                            </div>
+                                            <div class="fht-cell">
+                                            </div>
+                                        </th>
+                                        <th style="text-align: center; vertical-align: middle; " data-field="updatetime">
+                                            <div class="th-inner ">
+                                                记录时间
+                                            </div>
+                                            <div class="fht-cell">
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody data-listidx="0">
+                                    {foreach name="signList" item="vo"}
+                                    <tr data-index="0">
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            {$vo.username}
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            {$vo.nickname}
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            {$vo.date}
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            {$vo.month}
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            {$vo.updatetime|date="Y-m-d H:i:s",###}
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="fixed-table-footer" style="display: none;">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="fixed-table-pagination" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixed-table-pagination" style="display: block;">
+                        <div class="pull-left pagination-detail">
+                            <span class="pagination-info">显示第 {$signList->currentPage() * $signList->listRows() - $signList->listRows() + 1} 到第 {$signList->currentPage() * $signList->listRows() > $signList->total() ? $signList->total() : $signList->currentPage() * $signList->listRows()} 条记录，总共 {$signList->total()} 条记录</span>
+                            <!--<span class="page-list">每页显示 <span class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="page-size">10</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="menuitem" class="active"><a href="#">10</a></li>
+                                <li role="menuitem"><a href="#">25</a></li>
+                                <li role="menuitem"><a href="#">50</a></li>
+                            </ul>
+                            </span> 条记录</span>-->
+                        </div>
+                        <div class="pull-right pagination">
+                            <ul class="pagination">
+                                <li class="page-next"><a href="/admin/report/signreport?page={$signList->lastPage()}">末页</a></li>
+                            </ul>
+                        </div>
+                        <div class="pull-right pagination">
+                            {$page}
+                        </div>
+                        <div class="pull-right pagination">
+                            <ul class="pagination">
+                                <li class="page-pre"><a href="/admin/report/signreport?page=1">首页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
