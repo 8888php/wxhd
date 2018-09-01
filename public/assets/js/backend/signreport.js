@@ -5,7 +5,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'report/signreport/index',
+                    index_url: 'signreport/index',
                     add_url: '',
                     edit_url: '',
                     del_url: '',
